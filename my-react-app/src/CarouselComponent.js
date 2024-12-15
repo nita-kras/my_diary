@@ -7,7 +7,10 @@ const CarouselComponent = () => {
   const [images, setImages] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:3001/api/images")
+    // Use the environment variable for the API URL
+    const apiUrl = process.env.REACT_APP_API_URL || "http://localhost:3001"; // Fallback to local URL if not defined
+
+    fetch(`${apiUrl}/api/images`)
       .then((response) => response.json())
       .then((data) => {
         // Shuffle the images randomly
@@ -34,7 +37,7 @@ const CarouselComponent = () => {
         {images.map((image, index) => (
           <div key={index}>
             <img
-              src={`http://localhost:3001${image}`} // Update to complete URL
+              src={`${process.env.REACT_APP_API_URL || "http://localhost:3001"}${image}`} // Using the environment variable for the image source
               alt={`image-${index}`}
               style={{ width: "100%", maxHeight: "500px", objectFit: "cover" }}
             />
